@@ -1,0 +1,7 @@
+# 仓库里统一用 LF：这些是 JS/YAML/JSON，跨平台更好读，也免得每次提交都刷
+# “LF will be replaced by CRLF” 的警告。
+* text=auto eol=lf
+*.mp3 binary
+*.png binary
+*.ico binary
+*.woff2 binary
