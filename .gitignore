@@ -1,0 +1,10 @@
+# 依赖：本插件零运行时依赖，这里只是防止将来误提交
+node_modules/
+
+# 测试产出的音频（test/smoke.mjs 每次合成都会覆盖它们）
+test/out-*.mp3
+
+# 日志与临时文件
+*.log
+*.tmp
+.part-*

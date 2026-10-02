@@ -1,0 +1,28 @@
+# ============================================================================
+# dsh-tts-reader —— DSH bundle patch
+# ============================================================================
+# 宿主半边（lib/index.js）订阅 agent/assistant-stream，把模型的回答切成短句、
+# 逐句合成 MP3，并对外只暴露一条拉取路由：
+#     GET /dsh-tts/tail?session=<id>&since=<seq>&limit=<n>
+# 客户端半边（lib/client.js）在输入框右侧放一个朗读开关，轮询这条路由并连播。
+#
+# config 里的值会原样传给 apply(ctx, config)：本插件没有导出 Config schema，
+# Cordis 会把整块 config 直接交给宿主半边（node_modules/@deepseek-ai/cordis:
+# `if (!runtime.Config) return config;`），所以这里可以放心写默认值。
+#
+# 安装：
+#   plugin_manager install_bundle  target=link:E:\development\dsh-tts-reader
+# ============================================================================
+
+- insert:
+    - id: dsh-tts-reader
+      name: dsh-tts-reader
+      config:
+        enabled: true
+        # 说话人：Edge TTS 的短名，启动时会向官方声音目录核对并翻译成全名。
+        voice: zh-CN-XiaoyiNeural
+        rate: '+0%'
+        volume: '+0%'
+        pitch: '+0Hz'
+        # 每次拉取最多返回的短句数；每次拉取最多新合成 1 句，保证第一声够快。
+        maxPerRequest: 3
